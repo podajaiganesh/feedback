@@ -1,6 +1,6 @@
 // The base URL of your Spring Boot backend.
-// CORRECTED: The port is now 6969 to match the running backend container.
-const API_BASE_URL = 'http://localhost:6969/api';
+// CORRECTED: The port is now 8081 to match the running backend container.
+const API_BASE_URL = 'http://localhost:8081/api';
 
 /**
  * Fetches all categories from the backend.

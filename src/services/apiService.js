@@ -1,5 +1,4 @@
 // The base URL of your Spring Boot backend.
-// CORRECTED: The port is now 8081 to match the running backend container.
 const API_BASE_URL = 'http://localhost:8081/api';
 
 /**
@@ -43,3 +42,18 @@ export const addFeedback = async (feedbackData) => {
     if (!response.ok) throw new Error('Failed to add feedback');
     return await response.json();
 };
+
+/**
+ * Adds a new category to the backend.
+ * @param {object} categoryData - The category data, e.g., { name: "Electronics" }.
+ */
+export const addCategory = async (categoryData) => {
+    const response = await fetch(`${API_BASE_URL}/categories`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(categoryData),
+    });
+    if (!response.ok) throw new Error('Failed to add category');
+    return await response.json();
+};
+

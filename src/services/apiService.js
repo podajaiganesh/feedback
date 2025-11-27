@@ -1,59 +1,48 @@
-// The base URL of your Spring Boot backend.
+// src/services/apiService.js
+
+// CRITICAL FIX: Use the Docker Compose service name 'backend' instead of 'localhost'
+// This allows the frontend container to talk to the backend container.
 const API_BASE_URL = 'http://localhost:8081/api';
 
-/**
- * Fetches all categories from the backend.
- */
 export const getCategories = async () => {
-    const response = await fetch(`${API_BASE_URL}/categories`);
-    if (!response.ok) throw new Error('Failed to fetch categories');
-    return await response.json();
+    // Calls: http://backend:8081/api/categories
+    const res = await fetch(`${API_BASE_URL}/categories`);
+    if (!res.ok) throw new Error(`Failed to fetch categories: HTTP Status ${res.status}`);
+    return res.json();
 };
 
-/**
- * Fetches all items from the backend.
- */
-export const getItems = async () => {
-    const response = await fetch(`${API_BASE_URL}/items`);
-    if (!response.ok) throw new Error('Failed to fetch items');
-    return await response.json();
-};
-
-/**
- * Fetches all feedback for a specific item ID.
- * @param {number} itemId - The ID of the item.
- */
-export const getFeedbackForItem = async (itemId) => {
-    const response = await fetch(`${API_BASE_URL}/feedback?itemId=${itemId}`);
-    if (!response.ok) throw new Error('Failed to fetch feedback');
-    return await response.json();
-};
-
-/**
- * Adds new feedback to the backend.
- * @param {object} feedbackData - The feedback object, e.g., { rating: 9, comment: "Great!", item: { id: 1 } }.
- */
-export const addFeedback = async (feedbackData) => {
-    const response = await fetch(`${API_BASE_URL}/feedback`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(feedbackData),
-    });
-    if (!response.ok) throw new Error('Failed to add feedback');
-    return await response.json();
-};
-
-/**
- * Adds a new category to the backend.
- * @param {object} categoryData - The category data, e.g., { name: "Electronics" }.
- */
 export const addCategory = async (categoryData) => {
-    const response = await fetch(`${API_BASE_URL}/categories`, {
+    // Calls: http://backend:8081/api/categories (POST)
+    const res = await fetch(`${API_BASE_URL}/categories`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(categoryData),
     });
-    if (!response.ok) throw new Error('Failed to add category');
-    return await response.json();
+    if (!res.ok) throw new Error(`Failed to add category: HTTP Status ${res.status}`);
+    return res.json();
 };
 
+export const getItems = async () => {
+    // Calls: http://backend:8081/api/items
+    const res = await fetch(`${API_BASE_URL}/items`);
+    if (!res.ok) throw new Error(`Failed to fetch items: HTTP Status ${res.status}`);
+    return res.json();
+};
+
+export const getFeedbackForItem = async (itemId) => {
+    // Calls: http://backend:8081/api/feedback?itemId=X
+    const res = await fetch(`${API_BASE_URL}/feedback?itemId=${itemId}`);
+    if (!res.ok) throw new Error(`Failed to fetch feedback: HTTP Status ${res.status}`);
+    return res.json();
+};
+
+export const addFeedback = async (feedbackData) => {
+    // Calls: http://backend:8081/api/feedback (POST)
+    const res = await fetch(`${API_BASE_URL}/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(feedbackData),
+    });
+    if (!res.ok) throw new Error(`Failed to add feedback: HTTP Status ${res.status}`);
+    return res.json();
+};
